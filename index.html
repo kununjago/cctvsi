@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>SI-Exhibition CCTV</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,19 +15,13 @@
             --card-bg: rgba(255, 255, 255, 0.95);
             --border-color: #cbd5e1;
 
-            /* Palet Warna Zona Sesuai Gambar */
+            /* Palet Warna Zona */
             --z-pink: #ec4899;
-            /* Zone A */
             --z-blue: #0ea5e9;
-            /* Zone B */
             --z-orange: #f97316;
-            /* Zone C */
             --z-yellow: #eab308;
-            /* Zone D */
             --z-dark: #1e3a8a;
-            /* Zone E */
             --z-purple: #a855f7;
-            /* Zone F */
         }
 
         * {
@@ -49,7 +42,6 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            /* Mencegah scroll */
         }
 
         /* --- LOADING SCREEN --- */
@@ -70,7 +62,9 @@
 
         .logo-box img {
             width: 80px;
+            /* Default animasi bounce, nanti di-override JS saat selesai loading */
             animation: bounce 2s infinite;
+            transform-origin: center;
         }
 
         .progress-container {
@@ -86,7 +80,8 @@
             width: 0%;
             height: 100%;
             background: var(--accent-orange);
-            animation: fillBar 1.5s ease-in-out forwards;
+            /* DIPERCEPAT: dari 1.5s menjadi 0.8s */
+            animation: fillBar 0.8s ease-in-out forwards;
         }
 
         /* --- CONTAINER UTAMA --- */
@@ -104,14 +99,11 @@
         }
 
         /* --- WRAPPER SKALA --- */
-        /* Canvas virtual ukuran tetap 1000x1600 yang akan di-scale */
         .scale-wrapper {
             position: relative;
             width: 1000px;
             height: 1600px;
             transform-origin: center center;
-            /* Border tipis untuk panduan visual saat dev (opsional) */
-            /* border: 1px dashed rgba(0,0,0,0.1); */
         }
 
         /* --- SVG DENAH --- */
@@ -139,7 +131,6 @@
 
         .zone {
             opacity: 0.3;
-            /* Transparansi warna zona */
             transition: opacity 0.5s ease;
             cursor: pointer;
         }
@@ -155,7 +146,6 @@
             stroke: var(--text-dark);
             stroke-width: 4;
             stroke-dasharray: 12 8;
-            /* Efek titik-titik putus */
             opacity: 0.6;
             filter: drop-shadow(0 2px 2px rgba(255, 255, 255, 0.8));
         }
@@ -168,13 +158,10 @@
         }
 
         /* --- KARTU CCTV --- */
-        /* UKURAN DIPERBESAR DISINI */
         .cam-card {
             position: absolute;
             width: 280px;
-            /* Lebar dinaikkan (sebelumnya 240) */
             height: 180px;
-            /* Tinggi dinaikkan (sebelumnya 150) */
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             border: 2px solid #fff;
@@ -208,7 +195,6 @@
             left: 0;
             width: 100%;
             padding: 8px 14px;
-            /* Padding sedikit diperbesar */
             background: rgba(255, 255, 255, 0.95);
             display: flex;
             justify-content: space-between;
@@ -218,7 +204,6 @@
 
         .cam-title {
             font-size: 0.8rem;
-            /* Font diperbesar dikit */
             font-weight: 800;
             color: var(--text-dark);
             text-transform: uppercase;
@@ -244,45 +229,36 @@
             animation: blink 1s infinite;
         }
 
-        /* --- POSISI CCTV (Koordinat Absolut pada Wrapper 1000x1600) --- */
-        /* DIGESER KE TEPI (10px dari kiri/kanan) UNTUK MENJAUH DARI KAPAL */
-
-        /* A - Top Center (Pink) -> Pindah ke Kanan Jauh */
+        /* --- POSISI CCTV --- */
         .cctv-1 {
             top: 180px;
             right: 10px;
         }
 
-        /* B - Top Right (Blue) -> Kanan Jauh */
         .cctv-2 {
             top: 450px;
             right: 10px;
         }
 
-        /* C - Upper Left (Orange) -> Kiri Jauh */
         .cctv-3 {
             top: 400px;
             left: 10px;
         }
 
-        /* D - Middle Left (Yellow) -> Kiri Jauh */
         .cctv-4 {
             top: 680px;
             left: 10px;
         }
 
-        /* E - Bottom Left (Dark Blue) -> Kiri Jauh */
         .cctv-5 {
             top: 1100px;
             left: 10px;
         }
 
-        /* F - Bottom Right (Purple) -> Kanan Jauh */
         .cctv-6 {
             top: 1100px;
             right: 10px;
         }
-
 
         /* --- MODAL POPUP --- */
         .modal-overlay {
@@ -342,6 +318,7 @@
             transform: rotate(90deg);
         }
 
+        /* --- KEYFRAMES --- */
         @keyframes bounce {
 
             0%,
@@ -357,6 +334,19 @@
         @keyframes fillBar {
             to {
                 width: 100%;
+            }
+        }
+
+        /* ANIMASI BARU: ZOOM IN EFFECT */
+        @keyframes zoomInEffect {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(50);
+                opacity: 0;
             }
         }
 
@@ -466,7 +456,7 @@
                 <iframe src="https://cctv.sekolahimpian.com/cam1/" class="live-feed"
                     allow="autoplay; encrypted-media"></iframe>
                 <div class="card-info">
-                    <span class="cam-title">A. Lobby</span>
+                    <span class="cam-title">01. Lobby</span>
                     <div class="live-badge">
                         <div class="blink"></div> LIVE
                     </div>
@@ -477,7 +467,7 @@
                 <iframe src="https://cctv.sekolahimpian.com/cam2/" class="live-feed"
                     allow="autoplay; encrypted-media"></iframe>
                 <div class="card-info">
-                    <span class="cam-title">B. Timeline</span>
+                    <span class="cam-title">02. Instalasi</span>
                     <div class="live-badge">
                         <div class="blink"></div> LIVE
                     </div>
@@ -488,7 +478,7 @@
                 <iframe src="https://cctv.sekolahimpian.com/cam3/" class="live-feed"
                     allow="autoplay; encrypted-media"></iframe>
                 <div class="card-info">
-                    <span class="cam-title">C. Satu Tahun</span>
+                    <span class="cam-title">03. Timeline SI</span>
                     <div class="live-badge">
                         <div class="blink"></div> LIVE
                     </div>
@@ -499,7 +489,7 @@
                 <iframe src="https://cctv.sekolahimpian.com/cam4/" class="live-feed"
                     allow="autoplay; encrypted-media"></iframe>
                 <div class="card-info">
-                    <span class="cam-title">D. Koridor</span>
+                    <span class="cam-title">04. Al-Khawarizmi</span>
                     <div class="live-badge">
                         <div class="blink"></div> LIVE
                     </div>
@@ -510,7 +500,7 @@
                 <iframe src="https://cctv.sekolahimpian.com/cam5/" class="live-feed"
                     allow="autoplay; encrypted-media"></iframe>
                 <div class="card-info">
-                    <span class="cam-title">E. Khawarizmi</span>
+                    <span class="cam-title">05. Live Talent</span>
                     <div class="live-badge">
                         <div class="blink"></div> LIVE
                     </div>
@@ -521,7 +511,7 @@
                 <iframe src="https://cctv.sekolahimpian.com/cam6/" class="live-feed"
                     allow="autoplay; encrypted-media"></iframe>
                 <div class="card-info">
-                    <span class="cam-title">F. IoT Room</span>
+                    <span class="cam-title">06. TDA & IOT</span>
                     <div class="live-badge">
                         <div class="blink"></div> LIVE
                     </div>
@@ -542,16 +532,30 @@
     </div>
 
     <script>
-        // A. SYSTEM LOADING
+        // A. SYSTEM LOADING & ZOOM LOGIC
         window.addEventListener('load', () => {
+            // Waktu tunggu dipercepat (800ms sesuai progress bar)
             setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
+                // 1. Ambil elemen logo
+                const logo = document.querySelector('.logo-box img');
+
+                // 2. Override animasi bounce dengan ZOOM IN
+                // Logo akan membesar (scale 50x) dalam 0.5 detik
+                logo.style.animation = "zoomInEffect 0.5s ease-in forwards";
+
+                // 3. Fade out background putih sedikit setelah zoom mulai (biar efek 'masuk' ke layar)
+                setTimeout(() => {
+                    document.getElementById('loader').style.opacity = '0';
+                }, 300);
+
+                // 4. Hapus loader sepenuhnya dan tampilkan halaman utama
                 setTimeout(() => {
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('mainContainer').style.opacity = '1';
                     fitToScreen();
-                }, 800);
-            }, 1000);
+                }, 700); // Waktu total sampai animasi zoom selesai
+
+            }, 800);
         });
 
         // B. FIT TO SCREEN LOGIC (NO SCROLL)
